@@ -19,7 +19,7 @@ const time = setInterval(() => {
         idade.textContent = Number(idade.textContent)+1;
     }
 
-    if(segundos%1 == 0) {
+    if(segundos%15 == 0) {
         if(Number(comida.textContent) == 0){
             saude.textContent = Number(saude.textContent)-1;
             
@@ -45,6 +45,6 @@ const time = setInterval(() => {
         }
     }
 
-}, 100);
+}, 1000);
 
 
