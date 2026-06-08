@@ -2,6 +2,7 @@ let segundos = 0;
 let minutos = 0;
 let dead = 0;
 
+
 let saude = document.getElementById("saude");
 let comida = document.getElementById("comida");
 let felicidade = document.getElementById("felicidade");
@@ -12,30 +13,26 @@ const imagembichinho = document.getElementById("imagempou");
 
 
 const time = setInterval(() => {
-    segundos++;
-    console.log(`Tempo decorrido: ${segundos} segundos`);
-    if(segundos%60 == 0){
-        minutos++;
-        idade.textContent = Number(idade.textContent)+1;
-    }
+    fetch('http://127.0.0.1:5000/status')
+        .then(response => {
+            if (!response.ok)
+                throw new Error('Erro na requisição ' + response.nome);
 
-    if(segundos%15 == 0) {
-        if(Number(comida.textContent) == 0){
-            saude.textContent = Number(saude.textContent)-1;
-            
-            if(Number(energia.textContent > 2))
-                energia.textContent = Number(energia.textContent)-2;
-            else
-                energia.textContent = 0;
+            return response.json();
+        })
+        .then(data => {
+            console.log("Status recebido!\nNome do Bichinho:", data.nome);
+            saude.textContent = data.saude;
+            comida.textContent = data.comida;
+            felicidade.textContent = data.felicidade;
+            energia.textContent = data.energia;
+            idade.textContent = data.idade;
+            nome.textContent = data.nome;
 
-            if(Number(felicidade.textContent > 3)) 
-                felicidade.textContent = Number(felicidade.textContent)-3;
-            else 
-                felicidade.textContent = 0;
-        }
-        else{
-            comida.textContent = Number(comida.textContent)-1;
-        }
+        })
+        .catch(error => {
+            console.error('Erro: ', error);
+        })
 
         if(Number(saude.textContent) == 0 && dead==0) {
                 imagembichinho.src = 'bichinhostates/deadpou.png';
@@ -43,8 +40,9 @@ const time = setInterval(() => {
                 dead=1;
                 clearInterval(time);
         }
-    }
-
 }, 1000);
+
+
+
 
 
