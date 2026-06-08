@@ -2,8 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import threading
 import time
-# source venv/bin/activate
-# sudo fuser -k 5000/tcp
+# para rodar o servidor é necessario entrar no ambiente virtual do python usando: source venv/bin/activate
+# parar o processo do servidor, se necessario: sudo fuser -k 5000/tcp
 
 app = Flask(__name__)
 CORS(app)
